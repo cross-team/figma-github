@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './App';
-import {RouterController} from './providers/router-context';
+import {AppController} from './providers/app-context';
 
 ReactDOM.render(
-    <RouterController>
+    <AppController>
         <App />
-    </RouterController>,
+    </AppController>,
     document.getElementById('react-page')
 );

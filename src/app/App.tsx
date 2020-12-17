@@ -1,22 +1,26 @@
 import * as React from 'react';
 import Issues from './pages/issues';
 import Tokens from './pages/tokens';
-import RouterContext from './providers/router-context';
+import AppContext from './providers/app-context';
 import './styles/ui.css';
 import 'react-figma-plugin-ds/figma-plugin-ds.css';
 
 declare function require(path: string): any;
 
 const App = ({}) => {
-    var routes = React.useContext(RouterContext);
+    var {state} = React.useContext(AppContext);
     var renderPage;
 
-    switch (routes.state.page) {
+    switch (state.page) {
         case '/issues':
             renderPage = <Issues />;
             break;
         default:
-            renderPage = <Tokens />;
+            if (state.loggedIn) {
+                renderPage = <Issues />;
+            } else {
+                renderPage = <Tokens />;
+            }
             break;
     }
 

@@ -1,11 +1,13 @@
 import * as React from 'react';
 
-var RouterContext = React.createContext();
-export default RouterContext;
+var AppContext = React.createContext();
+export default AppContext;
 
 var initialState = {
     page: '/',
     loggedIn: false,
+    figmaAccessCode: '',
+    githubAccessCode: '',
 };
 
 function reducer(state, action) {
@@ -17,7 +19,7 @@ function reducer(state, action) {
     }
 }
 
-export function RouterController({children}) {
+export function AppController({children}) {
     const [state, dispatch] = React.useReducer(reducer, initialState);
 
     function navigate(path) {
@@ -29,5 +31,5 @@ export function RouterController({children}) {
         navigate,
     };
 
-    return <RouterContext.Provider value={value}>{children}</RouterContext.Provider>;
+    return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
