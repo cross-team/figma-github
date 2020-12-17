@@ -1,11 +1,25 @@
 import * as React from 'react';
-import {Text} from 'react-figma-plugin-ds';
-import '../styles/ui.css';
+import Issues from './pages/issues';
+import Tokens from './pages/tokens';
+import RouterContext from './providers/router-context';
+import './styles/ui.css';
 import 'react-figma-plugin-ds/figma-plugin-ds.css';
 
 declare function require(path: string): any;
 
 const App = ({}) => {
+    var routes = React.useContext(RouterContext);
+    var renderPage;
+
+    switch (routes.state.page) {
+        case '/issues':
+            renderPage = <Issues />;
+            break;
+        default:
+            renderPage = <Tokens />;
+            break;
+    }
+
     React.useEffect(() => {
         // This is how we read messages sent from the plugin controller
         window.onmessage = event => {
@@ -19,20 +33,7 @@ const App = ({}) => {
         parent.postMessage({pluginMessage: {type: messageType}}, '*');
     }
 
-    return (
-        <div id="root">
-            <Text size="xlarge" weight="bold">
-                Welcome to your figma plugin!
-            </Text>
-            <Text size="large" weight="normal">
-                Check out{' '}
-                <a href="https://github.com/alexandrtovmach/react-figma-plugin-ds/" target="_blank" rel="noreferrer">
-                    react-figma-plugin-ds
-                </a>{' '}
-                on gitHub to learn about the available components!
-            </Text>
-        </div>
-    );
+    return <div className="root">{renderPage}</div>;
 };
 
 export default App;
