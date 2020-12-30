@@ -3,11 +3,8 @@ import * as React from 'react';
 var AppContext = React.createContext();
 export default AppContext;
 
-var initialState = {
+var defaultState = {
     page: '/',
-    loggedIn: false,
-    figmaAccessCode: '',
-    githubAccessCode: '',
 };
 
 function reducer(state, action) {
@@ -20,14 +17,14 @@ function reducer(state, action) {
 }
 
 export function AppController({children}) {
-    const [state, dispatch] = React.useReducer(reducer, initialState);
+    const [appState, dispatch] = React.useReducer(reducer, defaultState);
 
     function navigate(path) {
         dispatch({type: 'navigate', path});
     }
 
     var value = {
-        state,
+        appState,
         navigate,
     };
 

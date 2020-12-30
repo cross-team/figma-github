@@ -1,19 +1,22 @@
 figma.showUI(__html__, {
-    height: 250,
+    height: 400,
 });
 
 figma.loadFontAsync({family: 'Roboto', style: 'Regular'});
 
-figma.ui.onmessage = msg => {
+figma.ui.onmessage = async msg => {
     switch (msg.type) {
-        case 'message1':
-            //Enter your fimga API code here!!
+        case 'getTokens':
+            let githubToken = await figma.clientStorage.getAsync('githubToken');
+            figma.ui.postMessage({
+                githubToken,
+            });
             break;
-        case 'message2':
-            //Enter your fimga API code here!!
+        case 'setGHToken':
+            figma.clientStorage.setAsync('githubToken', msg.value);
             break;
-        case 'message3':
-            //Enter your fimga API code here!!
+        case 'setFigToken':
+            figma.clientStorage.setAsync('figmaToken', msg.value);
             break;
         default:
             break;
